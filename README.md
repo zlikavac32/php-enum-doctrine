@@ -1,5 +1,6 @@
 # PHP Enum Doctrine
 
+[![Build Status](https://travis-ci.org/zlikavac32/php-enum-doctrine.svg?branch=master)](https://travis-ci.org/zlikavac32/php-enum-doctrine) 
 
 Doctrine support for [zlikavac32/php-enum](https://github.com/zlikavac32/php-enum).
 
