@@ -9,8 +9,8 @@ Doctrine support for [zlikavac32/php-enum](https://github.com/zlikavac32/php-enu
 1. [Installation](#installation)
 1. [Usage](#usage)
     1. [Custom column length](#custom-column-length)
-1. [Restrictions](#restrictions)
 1. [Limitations](#limitations)
+1. [Further work](#further-work)
 
 ## Installation
 
@@ -57,7 +57,7 @@ And that's it. Only thing left to do is to register the type using
 
 
 ```php
-\Doctrine\DBAL\Types\Type::addType('enum_yes_no', \Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnumType::class);
+\Doctrine\DBAL\Types\Type::addType('enum_yes_no', \YesNoEnumType::class);
 ```
 
 You can now use `enum_yes_no` type.
