@@ -1,6 +1,6 @@
 # PHP Enum Doctrine
 
-[![Build Status](https://travis-ci.org/zlikavac32/php-enum-doctrine.svg?branch=master)](https://travis-ci.org/zlikavac32/php-enum-doctrine) 
+[![Build Status](https://travis-ci.org/zlikavac32/php-enum-doctrine.svg?branch=master)](https://travis-ci.org/zlikavac32/php-enum-doctrine) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zlikavac32/php-enum-doctrine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zlikavac32/php-enum-doctrine/?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f8fad3e112734573b3fbb2ca05f24bf5)](https://www.codacy.com/app/zlikavac32/php-enum-doctrine?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zlikavac32/php-enum-doctrine&amp;utm_campaign=Badge_Grade)
 
 Doctrine support for [zlikavac32/php-enum](https://github.com/zlikavac32/php-enum).
 
