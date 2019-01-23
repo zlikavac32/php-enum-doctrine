@@ -59,17 +59,9 @@ class EnumTypeORMIntegrationTest extends TestCase
             ]
         );
 
-        $this->assertSame(
-            [
-                <<<'SQL'
-CREATE TABLE answer (id INTEGER NOT NULL, answer VARCHAR(32) DEFAULT NULL --(DC2Type:enum_yes_no)
-, PRIMARY KEY(id))
-SQL
-    ,
+        $this->assertArrayHasKey(0, $createSchemaSqls);
 
-            ],
-            $createSchemaSqls
-        );
+        $this->assertContains('answer VARCHAR(32) DEFAULT NULL --(DC2Type:enum_yes_no)', $createSchemaSqls[0]);
     }
 
     public function testThatEntityWithNonNullEnumCanBeCreated(): void
