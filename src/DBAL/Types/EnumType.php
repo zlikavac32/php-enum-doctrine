@@ -8,6 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use LogicException;
+use function Zlikavac32\Enum\assertFqnIsEnumClass;
 use Zlikavac32\Enum\Enum;
 use Zlikavac32\Enum\EnumNotFoundException;
 
@@ -86,7 +87,7 @@ abstract class EnumType extends Type
 
         $enumClass = $this->enumClass();
 
-        $this->assertThatEnumClassIsValid($enumClass);
+        assertFqnIsEnumClass($enumClass);
 
         $this->enumClass = $enumClass;
     }
@@ -120,13 +121,6 @@ abstract class EnumType extends Type
                 $columnLength
             )
         );
-    }
-
-    private function assertThatEnumClassIsValid(string $enumClass): void
-    {
-        if (false === is_subclass_of($enumClass, Enum::class)) {
-            throw new LogicException(sprintf('%s does not have %s as it\'s parent', $enumClass, Enum::class));
-        }
     }
 
     abstract protected function enumClass(): string;
