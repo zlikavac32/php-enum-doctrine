@@ -1,6 +1,6 @@
 # PHP-Enum Doctrine changelog
 
-## Unreleased
+## 0.2.0 (2019-01-23)
 
 * **[CHANGED]** Require `zlikavac32/php-enum:^1.3`
 
