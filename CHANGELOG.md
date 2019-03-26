@@ -1,5 +1,9 @@
 # PHP-Enum Doctrine changelog
 
+## Unreleased
+
+* **[ADDED]** Support for zlikavac32/php-enum:^2.0
+
 ## 0.3.0 (2019-03-23)
 
 * **[REMOVED]** PHP 7.1 support

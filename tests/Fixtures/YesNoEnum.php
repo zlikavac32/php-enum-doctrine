@@ -14,6 +14,13 @@ abstract class YesNoEnum extends Enum
 {
     protected static function enumerate(): array
     {
-        return ['NO', 'YES'];
+        return [
+            'NO' => new class extends YesNoEnum {
+
+            },
+            'YES' => new class extends YesNoEnum {
+
+            }
+        ];
     }
 }
