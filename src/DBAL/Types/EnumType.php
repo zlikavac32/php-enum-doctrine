@@ -19,7 +19,7 @@ abstract class EnumType extends Type
      */
     private $enumClass;
 
-    private $checkedForNameLengths = false;
+    private bool $checkedForNameLengths = false;
 
     final public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
@@ -128,8 +128,6 @@ abstract class EnumType extends Type
     /**
      * Column length used for variable character column definition that will hold the enum name as a value. Override
      * if 32 is to big or to small.
-     *
-     * @return int
      */
     protected function columnLength(): int
     {
