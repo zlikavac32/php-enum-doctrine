@@ -21,7 +21,7 @@ class EnumTypeORMIntegrationTest extends TestCase
      */
     private static $entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (
             false === extension_loaded('sqlite3')
@@ -32,13 +32,13 @@ class EnumTypeORMIntegrationTest extends TestCase
         }
     }
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         //This will remain in the memory until the script ends
         Type::addType('enum_yes_no', YesNoEnumType::class);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         if (null === self::$entityManager) {
             return;

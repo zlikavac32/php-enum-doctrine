@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Zlikavac32\DoctrineEnum\Tests\Unit\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Zlikavac32\DoctrineEnum\Tests\Fixtures\InvalidEnumType;
@@ -24,7 +26,7 @@ class EnumTypeTest extends TestCase
      */
     private $platform;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (false === Type::hasType(self::ENUM_YES_NO)) {
             Type::addType(self::ENUM_YES_NO, YesNoEnumType::class);
@@ -83,74 +85,65 @@ class EnumTypeTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum::YES() is longer than 2 characters
-     */
     public function testThatToSmallColumnThrowsException(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum::YES() is longer than 2 characters');
+
         Type::getType(self::ENUM_TO_SMALL_YES_NO)
             ->requiresSQLCommentHint($this->platform);
     }
 
-    /**
-     * @expectedException \Doctrine\DBAL\Types\ConversionException
-     * @expectedExceptionMessage Could not convert PHP value '1' of type 'integer' to type 'enum_yes_no'. Expected one
-     *     of the following types: null, string
-     */
     public function testThatInvalidValueToPhpThrowsException(): void
     {
+        $this->expectException(ConversionException::class);
+        $this->expectExceptionMessage('Could not convert PHP value \'1\' of type \'integer\' to type \'enum_yes_no\'. Expected one of the following types: null, string');
+
         Type::getType(self::ENUM_YES_NO)
             ->convertToPHPValue(1, $this->platform);
     }
 
-    /**
-     * @expectedException \Doctrine\DBAL\Types\ConversionException
-     * @expectedExceptionMessage Could not convert database value "I_DO_NOT_EXIST" to Doctrine Type enum_yes_no
-     */
     public function testThatInvalidEnumNameToPhpThrowsException(): void
     {
+        $this->expectException(ConversionException::class);
+        $this->expectExceptionMessage('Could not convert database value "I_DO_NOT_EXIST" to Doctrine Type enum_yes_no');
+
         Type::getType(self::ENUM_YES_NO)
             ->convertToPHPValue('I_DO_NOT_EXIST', $this->platform);
     }
 
-    /**
-     * @expectedException \Doctrine\DBAL\Types\ConversionException
-     * @expectedExceptionMessage Could not convert PHP value of type 'stdClass' to type 'enum_yes_no'. Expected one of
-     *     the following types: null, Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum
-     */
     public function testThatInvalidValueToDatabaseThrowsException(): void
     {
+        $this->expectException(ConversionException::class);
+        $this->expectExceptionMessage('Could not convert PHP value of type \'stdClass\' to type \'enum_yes_no\'. Expected one of the following types: null, Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum');
+
         Type::getType(self::ENUM_YES_NO)
             ->convertToDatabaseValue(new stdClass(), $this->platform);
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage stdClass does not have Zlikavac32\Enum\Enum as it's parent
-     */
     public function testThatGetSqlDeclarationChecksForInvalidEnumType(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('stdClass does not have Zlikavac32\Enum\Enum as it\'s parent');
+
         Type::getType(self::ENUM_INVALID)
             ->getSQLDeclaration([], $this->platform);
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage stdClass does not have Zlikavac32\Enum\Enum as it's parent
-     */
     public function testThatConvertToDatabaseValueChecksForInvalidEnumType(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('stdClass does not have Zlikavac32\Enum\Enum as it\'s parent');
+
         Type::getType(self::ENUM_INVALID)
             ->convertToDatabaseValue(1, $this->platform);
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage stdClass does not have Zlikavac32\Enum\Enum as it's parent
-     */
     public function testThatConvertToPhpValueChecksForInvalidEnumType(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('stdClass does not have Zlikavac32\Enum\Enum as it\'s parent');
+
         Type::getType(self::ENUM_INVALID)
             ->convertToPHPValue(1, $this->platform);
     }

@@ -1,5 +1,10 @@
 # PHP-Enum Doctrine changelog
 
+## Unreleased
+
+* **[CHANGED]** Minimum supported `zlikavac32/php-enum` version is 3.0.0
+* **[CHANGED]** Minimum supported PHP version is 7.4
+
 ## 0.4.0 (2019-03-26)
 
 * **[ADDED]** Support for zlikavac32/php-enum:^2.0
