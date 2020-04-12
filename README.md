@@ -9,6 +9,7 @@ Doctrine support for [zlikavac32/php-enum](https://github.com/zlikavac32/php-enu
 1. [Installation](#installation)
 1. [Usage](#usage)
     1. [Custom column length](#custom-column-length)
+    1. [Custom representation](#custom-representation)
 1. [Limitations](#limitations)
 1. [Further work](#further-work)
 
@@ -84,6 +85,10 @@ protected function columnLength(): int
 ```
 
 Note that on types first usage, all enum elements names are checked against specified column length. If a name longer than maximum length is detected, a `\LogicException` is thrown.
+
+### Custom representation
+
+By default, name of the enum element is used for it's representation in the database. To change that behaviour, override methods `enumToDatabaseValue()` and `databaseValueToEnum()`.
 
 ## Limitations
 

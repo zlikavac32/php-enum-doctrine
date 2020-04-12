@@ -1,5 +1,9 @@
 # PHP-Enum Doctrine changelog
 
+## Unreleased
+
+* **[ADDED]** Support for custom enum representation
+
 ## 0.5.0 (2020-04-09)
 
 * **[CHANGED]** Minimum supported `zlikavac32/php-enum` version is 3.0.0

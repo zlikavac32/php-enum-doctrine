@@ -10,7 +10,9 @@ use Doctrine\DBAL\Types\Type;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Zlikavac32\DoctrineEnum\Tests\Fixtures\CustomRepresentationEnumType;
 use Zlikavac32\DoctrineEnum\Tests\Fixtures\InvalidEnumType;
+use Zlikavac32\DoctrineEnum\Tests\Fixtures\ToSmallCustomRepresentationEnumType;
 use Zlikavac32\DoctrineEnum\Tests\Fixtures\ToSmallYesNoEnumType;
 use Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum;
 use Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnumType;
@@ -20,6 +22,8 @@ class EnumTypeTest extends TestCase
     const ENUM_YES_NO = 'enum_yes_no';
     const ENUM_TO_SMALL_YES_NO = 'enum_to_small_yes_no';
     const ENUM_INVALID = 'enum_invalid';
+    const ENUM_TO_SMALL_CUSTOM_REPRESENTATION = 'enum_to_small_custom_representation';
+    const ENUM_CUSTOM_REPRESENTATION = 'enum_custom_representation';
 
     /**
      * @var AbstractPlatform
@@ -36,6 +40,12 @@ class EnumTypeTest extends TestCase
         }
         if (false === Type::hasType(self::ENUM_INVALID)) {
             Type::addType(self::ENUM_INVALID, InvalidEnumType::class);
+        }
+        if (false === Type::hasType(self::ENUM_TO_SMALL_CUSTOM_REPRESENTATION)) {
+            Type::addType(self::ENUM_TO_SMALL_CUSTOM_REPRESENTATION, ToSmallCustomRepresentationEnumType::class);
+        }
+        if (false === Type::hasType(self::ENUM_CUSTOM_REPRESENTATION)) {
+            Type::addType(self::ENUM_CUSTOM_REPRESENTATION, CustomRepresentationEnumType::class);
         }
 
         $this->platform = $this->createMock(AbstractPlatform::class);
@@ -77,6 +87,20 @@ class EnumTypeTest extends TestCase
         );
     }
 
+    public function testThatConvertInstanceToDatabaseReturnsCustomRepresentation(): void
+    {
+        $this->assertSame(
+            'yes',
+            Type::getType(self::ENUM_CUSTOM_REPRESENTATION)
+                ->convertToDatabaseValue(YesNoEnum::YES(), $this->platform)
+        );
+        $this->assertSame(
+            'noooo',
+            Type::getType(self::ENUM_CUSTOM_REPRESENTATION)
+                ->convertToDatabaseValue(YesNoEnum::NO(), $this->platform)
+        );
+    }
+
     public function testThatCommentHintIsRequired(): void
     {
         $this->assertTrue(
@@ -91,6 +115,15 @@ class EnumTypeTest extends TestCase
         $this->expectExceptionMessage('Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum::YES() is longer than 2 characters');
 
         Type::getType(self::ENUM_TO_SMALL_YES_NO)
+            ->requiresSQLCommentHint($this->platform);
+    }
+
+    public function testThatToSmallColumnForCustomRepresentationThrowsException(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Zlikavac32\DoctrineEnum\Tests\Fixtures\YesNoEnum::noooo() is longer than 4 characters');
+
+        Type::getType(self::ENUM_TO_SMALL_CUSTOM_REPRESENTATION)
             ->requiresSQLCommentHint($this->platform);
     }
 
