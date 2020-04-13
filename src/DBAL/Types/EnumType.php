@@ -42,9 +42,7 @@ abstract class EnumType extends Type
             throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', $this->enumClass]);
         }
 
-        $name = $value->name();
-
-        return $name;
+        return $this->enumToDatabaseValue($value);
     }
 
     final public function convertToPHPValue($value, AbstractPlatform $platform): ?Enum
@@ -59,6 +57,19 @@ abstract class EnumType extends Type
             throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'string']);
         }
 
+        return $this->databaseValueToEnum($value);
+    }
+
+    protected function enumToDatabaseValue(Enum $enum): string
+    {
+        return $enum->name();
+    }
+
+    /**
+     * @throws ConversionException
+     */
+    protected function databaseValueToEnum(string $value): Enum
+    {
         try {
             return $this->enumClass::valueOf($value);
         } catch (EnumNotFoundException $e) {
@@ -107,7 +118,7 @@ abstract class EnumType extends Type
 
     private function assertElementNameLengthIsValid(Enum $element, int $columnLength): void
     {
-        $elementName = $element->name();
+        $elementName = $this->enumToDatabaseValue($element);
 
         if (strlen($elementName) <= $columnLength) {
             return ;
