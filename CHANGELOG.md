@@ -1,6 +1,6 @@
 # PHP-Enum Doctrine changelog
 
-## Unreleased
+## 0.6.0 (2020-04-13)
 
 * **[ADDED]** Support for custom enum representation
 
